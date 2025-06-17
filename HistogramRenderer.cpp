@@ -316,7 +316,21 @@ void HistogramRenderer::renderText(const std::string& text, int x, int y, SDL_Co
         return;
     }
     
-    SDL_SetTextureBlendMode(textTexture, SDL_BLENDMODE_BLEND);
+    Uint8 r, g, b, a;
+    SDL_BlendMode blendMode;
+    
+    SDL_GetSurfaceColorMod(textSurface, &r, &g, &b);
+    SDL_SetTextureColorMod(textTexture, r, g, b);
+    
+    SDL_GetSurfaceAlphaMod(textSurface, &a);
+    SDL_SetTextureAlphaMod(textTexture, a);
+    
+    if (SDL_HasColorKey(textSurface)) {
+        SDL_SetTextureBlendMode(textTexture, SDL_BLENDMODE_BLEND);
+    } else {
+        SDL_GetSurfaceBlendMode(textSurface, &blendMode);
+        SDL_SetTextureBlendMode(textTexture, blendMode);
+    }
     
     int textWidth = textSurface->w;
     int textHeight = textSurface->h;
