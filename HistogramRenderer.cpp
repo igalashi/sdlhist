@@ -325,7 +325,8 @@ void HistogramRenderer::renderText(const std::string& text, int x, int y, SDL_Co
     SDL_GetSurfaceAlphaMod(textSurface, &a);
     SDL_SetTextureAlphaMod(textTexture, a);
     
-    if (SDL_HasColorKey(textSurface)) {
+    Uint32 colorKey;
+    if (SDL_GetColorKey(textSurface, &colorKey) == 0) {
         SDL_SetTextureBlendMode(textTexture, SDL_BLENDMODE_BLEND);
     } else {
         SDL_GetSurfaceBlendMode(textSurface, &blendMode);
