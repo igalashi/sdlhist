@@ -316,14 +316,17 @@ void HistogramRenderer::renderText(const std::string& text, int x, int y, SDL_Co
         return;
     }
     
+    SDL_SetTextureBlendMode(textTexture, SDL_BLENDMODE_BLEND);
+    
     int textWidth = textSurface->w;
     int textHeight = textSurface->h;
     SDL_FreeSurface(textSurface);
     
     SDL_Rect destRect;
     if (vertical) {
-        destRect = {x - textWidth/2, y - textHeight/2, textHeight, textWidth};
-        SDL_RenderCopyEx(m_renderer, textTexture, nullptr, &destRect, -90.0, nullptr, SDL_FLIP_NONE);
+        destRect = {x - textHeight/2, y - textWidth/2, textHeight, textWidth};
+        SDL_Point center = {textHeight/2, textWidth/2};
+        SDL_RenderCopyEx(m_renderer, textTexture, nullptr, &destRect, -90.0, &center, SDL_FLIP_NONE);
     } else {
         destRect = {x - textWidth/2, y - textHeight/2, textWidth, textHeight};
         SDL_RenderCopy(m_renderer, textTexture, nullptr, &destRect);
