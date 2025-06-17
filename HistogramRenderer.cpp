@@ -307,7 +307,7 @@ int HistogramRenderer::getBinAtScreenX(int screenX) {
 void HistogramRenderer::renderText(const std::string& text, int x, int y, SDL_Color color, bool vertical) {
     if (!m_font || text.empty()) return;
     
-    SDL_Surface* textSurface = TTF_RenderText_Solid(m_font, text.c_str(), color);
+    SDL_Surface* textSurface = TTF_RenderText_Blended(m_font, text.c_str(), color);
     if (!textSurface) return;
     
     SDL_Texture* textTexture = SDL_CreateTextureFromSurface(m_renderer, textSurface);
